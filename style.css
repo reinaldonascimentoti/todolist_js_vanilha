@@ -1,0 +1,236 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+/* 🟦 Midnight Blue #2C3E50
+⚪ Platinum #E5E8E8
+🟨 Champagne Gold #D4AF37
+🟫 Slate Gray #7F8C8D
+🤍 Ivory White #FDFEFE */
+
+body {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+  background-color: #051b35;
+}
+main {
+  grid-column: 2;
+  background-color: #051b35;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin-top: 1rem;
+  /* margin-left: 10rem;
+  margin-right: 10rem; */
+  background-color: #fdfefe;
+  border-radius: 10px;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  font-size: 2 rem;
+  color: #ffff;
+}
+.task-container {
+  margin-top: 0.5rem;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+  margin-bottom: 20px;
+  border-top-left-radius: 10px;
+  background-color: #fdfefe;
+}
+.com-tarefas {
+  display: none;
+}
+
+.div-btn button {
+  padding: 0.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.material-icons {
+  font-size: 48px;
+  color: #d4af37;
+  text-shadow: 1px 1px 1px #051b35;
+  transition: transform 0.3s;
+}
+.div-btn button:hover {
+  animation: pulse 1s infinite;
+  transition: 0.3s;
+}
+.taks-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background-color: #e5e8e8;
+  font-weight: 500;
+}
+.taks-input button {
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+  background-color: #d4af37;
+  color: #fdfefe;
+  font-weight: 500;
+  border: none;
+  margin-left: 0.5rem;
+}
+
+.text-input::placeholder {
+  font-size: 0, 75rem;
+  color: #7f8c8d; /* cor do placeholder */
+  font-style: italic;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  /* background-color: #e5e8e8; */
+}
+
+.task-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
+}
+.edit-modal {
+  display: none;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  border-radius: 5px;
+}
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+.tittle-modal {
+  background-color: #051b35;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 0.01rem;
+  margin-bottom: 0.85rem;
+  padding: 0.55rem;
+}
+
+.edit-task-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  width: 100%;
+  height: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background-color: #e5e8e8;
+  font-weight: 500;
+}
+.edit-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  font-weight: 500;
+}
+.edit-btn {
+  padding: 0.25rem;
+}
+
+.btn {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.75rem;
+  margin: 0.25rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+/* Botão Salvar */
+.salve-btn {
+  margin-left: 10px;
+  font-weight: 500;
+  background-color: #d4af37;
+  color: white;
+}
+
+/* Botão Cancelar */
+.cancel-btn {
+  background-color: #7f8c8d;
+  font-weight: 500;
+  color: white;
+}
+
+/* Efeito hover para ambos */
+.btn:hover {
+  transform: scale(1.1);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@media (max-width: 768px) {
+  body {
+    grid-template-columns: 1fr;
+  }
+  main {
+    grid-column: 1;
+    margin: 0.25rem;
+  }
+}
+@media (min-width: 768px) and (max-width: 1324px) {
+  body {
+    grid-template-columns: 1fr;
+  }
+  main {
+    grid-column: 1;
+    margin: 0.25rem;
+  }
+}

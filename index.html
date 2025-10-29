@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <title>Lista de tarefas</title>
+</head>
+
+<body>
+  <header></header>
+  <main>
+    <h1>Lista de tarefas</h1>
+    <div class="container">
+      <div class="taks-input">
+        <form id="todo-form" class="form">
+          <input id="task-title-input" type="text" placeholder="Digite uma tarefa" class="text-input">
+          <button id="add-task-button" type="submit" class="btn btn-add">Adicionar</button>
+        </form>
+      </div>
+      <div class="task-list">
+        <ul id="minhas-tarefas">
+          <li>Minhas tarefas</li>
+        </ul>
+        <section>
+          <ul id="todo-list">
+          </ul>
+        </section>
+      </div>
+
+    </div>
+    <div id="edit-modal" class="edit-modal">
+      <div class="tittle-modal">
+        <h3>Editar Tarefa</h3>
+      </div>
+      <div class="edit-container">
+        <input type="text" id="edit-task-input" class="" />
+        <button id="save-edit-btn">Salvar</button>
+        <button id="cancel-edit-btn">Cancelar</button>
+      </div>
+    </div>
+    <div id="modal-overlay" class="modal-overlay">
+    </div>
+
+  </main>
+  <script src="todo-list.js"></script>
+</body>
+
+</html>
