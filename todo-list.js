@@ -10,30 +10,38 @@ const form = document.querySelector("#todo-form");
 const taskTitleInput = document.querySelector("#task-title-input");
 const todolistUl = document.querySelector("#todo-list");
 
-let tasks = [];
 let taskIndexToEdit = null;
 
+const salvarTarefas = (tarefas) => {
+  localStorage.setItem("tasks", JSON.stringify(tarefas));
+};
+const carregarTarefas = () => {
+  const tarefasSalvas = localStorage.getItem("tasks");
+  return tarefasSalvas ? JSON.parse(tarefasSalvas) : [];
+};
+let tasks = carregarTarefas();
 // Formulário
-form.addEventListener("submit", (event) => {
-  event.preventDefault(); // previne o comportamento padrão do formulário
-  const taskTitle = taskTitleInput.value;
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const taskTitle = taskTitleInput.value.trim();
+
   if (taskTitle.length < 3) {
-    alert("O título da tarefa deve ter pelo menos 3 caracteres");
+    alert("O título da tarefa deve ter pelo menos 3 caracteres");
     return;
   }
+
   tasks.push({ title: taskTitle, done: false });
+  salvarTarefas(tasks);
   document.getElementById("minhas-tarefas").classList.add("com-tarefas");
   rederizarTarefas(tasks);
   taskTitleInput.value = "";
-  return tasks;
+  await mensagemModal("Tarefa adicionada com sucesso!");
 });
 
 const rederizarTarefas = (tasks) => {
-  console.log("Tarefas:", tasks);
   todolistUl.innerHTML = "";
 
   tasks.forEach((task, index) => {
-    // Se não for o primeiro item, insere uma linha antes
     if (index > 0) {
       const linha = document.createElement("hr");
       linha.style.border = "0";
@@ -55,48 +63,41 @@ const rederizarTarefas = (tasks) => {
     }
     li.appendChild(span);
 
-    input.addEventListener("change", (input) => {
-      span.style.textDecoration = input.target.checked
-        ? "line-through"
-        : "none";
-      const myTasks = span.textContent;
-      const newTasks = tasks.map((task) =>
-        task.title === myTasks ? { ...task, done: !task.done } : task
-      );
-      rederizarTarefas(newTasks); // atualiza a lista com novo estado
+    input.addEventListener("change", () => {
+      task.done = input.checked;
+      salvarTarefas(tasks);
+      rederizarTarefas(tasks);
     });
+
     const divBtn = document.createElement("div");
     li.appendChild(divBtn);
     divBtn.classList.add("div-btn");
-    const editBtn = document.createElement("button");
 
-    // Cria o ícone usando
+    const editBtn = document.createElement("button");
     const icon = document.createElement("span");
     icon.classList.add("material-icons");
-    icon.textContent = "edit"; // nome do ícone
+    icon.textContent = "edit";
     editBtn.appendChild(icon);
-    // Acessibilidade e tooltip
     editBtn.title = "Editar";
-
     editBtn.addEventListener("click", () => openEditModal(index));
     divBtn.appendChild(editBtn);
 
     const button = document.createElement("button");
-    // Cria o ícone usando
     const iconDelete = document.createElement("span");
     iconDelete.classList.add("material-icons");
-    iconDelete.textContent = "delete"; // nome do ícone
+    iconDelete.textContent = "delete";
     button.appendChild(iconDelete);
-    // Acessibilidade e tooltip
     button.title = "Excluir";
-    button.addEventListener("click", () => {
+    button.addEventListener("click", async () => {
       tasks.splice(index, 1);
+      salvarTarefas(tasks);
       rederizarTarefas(tasks);
       if (tasks.length === 0) {
         document
           .getElementById("minhas-tarefas")
           .classList.remove("com-tarefas");
       }
+      await mensagemModal("Tarefa excluída com sucesso!");
     });
     divBtn.appendChild(button);
     todolistUl.appendChild(li);
@@ -122,16 +123,36 @@ const closeEditModal = () => {
   modalOverlay.style.display = "none";
   taskIndexToEdit = null;
 };
+const mensagemModal = (texto) => {
+  return new Promise((resolve) => {
+    const mensagem = document.querySelector(".mensagem");
+    mensagem.textContent = texto;
+    mensagem.style.display = "block";
 
-saveEditBtn.addEventListener("click", () => {
+    setTimeout(() => {
+      mensagem.style.display = "none";
+      resolve(); // Continua após 2 segundos
+    }, 2000);
+  });
+};
+
+saveEditBtn.addEventListener("click", async () => {
   const newTitle = editTaskInput.value.trim();
   if (newTitle.length < 3) {
     alert("O título da tarefa deve ter pelo menos 3 caracteres");
     return;
   }
+
   tasks[taskIndexToEdit].title = newTitle;
-  closeEditModal();
+  salvarTarefas(tasks);
   rederizarTarefas(tasks);
+  closeEditModal();
+  await mensagemModal("Tarefa atualizada com sucesso!");
 });
 
 cancelEditBtn.addEventListener("click", closeEditModal);
+
+document.addEventListener("DOMContentLoaded", () => {
+  tasks = carregarTarefas(); // Carrega as tarefas salvas
+  rederizarTarefas(tasks);
+});
