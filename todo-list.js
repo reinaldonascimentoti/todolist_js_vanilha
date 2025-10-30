@@ -146,8 +146,8 @@ saveEditBtn.addEventListener("click", async () => {
   tasks[taskIndexToEdit].title = newTitle;
   salvarTarefas(tasks);
   rederizarTarefas(tasks);
-  closeEditModal();
   await mensagemModal("Tarefa atualizada com sucesso!");
+  closeEditModal();
 });
 
 cancelEditBtn.addEventListener("click", closeEditModal);
