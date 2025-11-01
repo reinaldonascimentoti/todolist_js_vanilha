@@ -21,7 +21,7 @@ const carregarTarefas = () => {
 };
 let tasks = carregarTarefas();
 // Formulário
-form.addEventListener("submit", async (event) => {
+form.addEventListener("submit", (event) => {
   event.preventDefault();
   const taskTitle = taskTitleInput.value.trim();
 
@@ -35,7 +35,6 @@ form.addEventListener("submit", async (event) => {
   document.getElementById("minhas-tarefas").classList.add("com-tarefas");
   rederizarTarefas(tasks);
   taskTitleInput.value = "";
-  await mensagemModal("Tarefa adicionada com sucesso!");
 });
 
 const rederizarTarefas = (tasks) => {
@@ -88,7 +87,7 @@ const rederizarTarefas = (tasks) => {
     iconDelete.textContent = "delete";
     button.appendChild(iconDelete);
     button.title = "Excluir";
-    button.addEventListener("click", async () => {
+    button.addEventListener("click", () => {
       tasks.splice(index, 1);
       salvarTarefas(tasks);
       rederizarTarefas(tasks);
@@ -97,7 +96,6 @@ const rederizarTarefas = (tasks) => {
           .getElementById("minhas-tarefas")
           .classList.remove("com-tarefas");
       }
-      await mensagemModal("Tarefa excluída com sucesso!");
     });
     divBtn.appendChild(button);
     todolistUl.appendChild(li);
